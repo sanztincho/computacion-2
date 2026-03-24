@@ -1,4 +1,3 @@
-@@ -0,0 +1,149 @@
 # Computación II - 2026
 
 ## Universidad de Mendoza - Ingeniería en Informática
