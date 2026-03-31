@@ -4,7 +4,7 @@
 
 # === Clases no publicadas (ir descomentando a medida que se liberan) ===
 #clase_01_docker_intro/
-clase_02_docker_aplicado/
+#clase_02_docker_aplicado/
 clase_03_procesos/
 clase_04_pipes/
 clase_05_senales_multiprocessing/
