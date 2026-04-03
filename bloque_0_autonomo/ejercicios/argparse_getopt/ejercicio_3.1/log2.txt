@@ -1,0 +1,3 @@
+[2024-01-15 11:00:00] System started
+[2024-01-15 11:00:05] ERROR in module X
+[2024-01-15 11:00:10] Recovery in progress

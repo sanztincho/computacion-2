@@ -1,0 +1,8 @@
+Starting application
+[2024-01-15 10:00:00] Connection established
+[2024-01-15 10:00:05] Processing request 1
+[2024-01-15 10:00:10] Error de conexión
+[2024-01-15 10:00:15] Processing request 2
+[2024-01-15 10:00:20] error in database query
+[2024-01-15 10:00:25] Request completed
+[2024-01-15 10:00:30] ERROR: Critical system failure
