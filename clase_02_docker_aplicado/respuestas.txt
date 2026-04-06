@@ -1,0 +1,40 @@
+Punto 1.1
+-¿El contador incrementa entre ejecuciones? ¿Por qué?
+Sí, incrementa entre ejecuciones porque el script guarda el valor en /datos/contador.txt.
+Ese archivo está montado desde el host con -v $(pwd)/datos:/datos, por lo que el valor persiste fuera del contenedor.
+Cada vez que ejecutás el contenedor, lee el archivo previo, suma 1 y vuelve a escribirlo.
+
+-¿Qué pasa si quitás el segundo -v (el de datos)?
+Si no montás datos con -v, el contenedor crea y usa /datos/contador.txt dentro de su propio sistema de archivos efímero.
+Entonces el contador no se mantiene entre ejecuciones de contenedores nuevos: arrancaría de cero o no vería el valor anterior.
+El archivo quedaría sólo dentro del contenedor y se pierde cuando el contenedor termina, a menos que uses el mismo contenedor sin borrarlo.
+
+Punto 1.2
+¿Podés ver el archivo contador.txt directamente desde tu host? ¿Por qué?
+No, no podés ver contador.txt directamente desde el host en el directorio del proyecto.
+Porque con -v contador-data:/datos usás un volumen nombrado de Docker, no un bind mount a una carpeta del host.
+Ese archivo queda en el almacenamiento interno de Docker, no en $(pwd) ni en tu árbol de trabajo local.
+
+Punto 3.3
+1. ¿Qué pasos se re-ejecutaron?
+En el primer rebuild (modificar app.py): Se ejecutaron desde el paso COPY app.py . en adelante. Los pasos anteriores (FROM, WORKDIR, COPY requirements.txt, RUN pip install) usaron caché.
+En el segundo rebuild (modificar requirements.txt): Se re-ejecutaron desde COPY requirements.txt . y especialmente RUN pip install --no-cache-dir -r requirements.txt en adelante.
+
+2. ¿Por qué?
+Docker usa capas en caché basadas en el contenido del Dockerfile y los archivos. Cuando algo cambia:
+Si cambias app.py → Solo se invalida la caché desde ese COPY en adelante
+Si cambias requirements.txt → Se invalida desde el COPY requirements.txt y especialmente el RUN pip install (que es costoso)
+Esto es importante para optimización: Debes poner las dependencias (que cambian menos frecuentemente) antes del código de la aplicación (que cambia más) para aprovechar mejor el caché.
+
+4.2
+Redis ya está configurado con persistencia:
+  volumes:
+    - redis-data:/data          # Named volume persistente
+  command: redis-server --appendonly yes  # Modo append-only file
+
+El named volume redis-data mantiene los datos en disco (no en memoria RAM del contenedor)
+El comando --appendonly yes habilita el Append Only File (AOF) de Redis, que guarda todas las operaciones en /data/appendonly.aof
+Cuando detienes (Ctrl+C) y reinicias (docker-compose up), Docker Compose mantiene el volumen, por lo que Redis recupera los datos automáticamente
+Sin esta configuración, Redis perdería todos los datos al detenerse el contenedor (reiniciaría en 0), porque los datos están solo en memoria RAM.
+
+
