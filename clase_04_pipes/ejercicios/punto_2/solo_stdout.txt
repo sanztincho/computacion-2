@@ -1,0 +1,3 @@
+Y otro mas directo al fd 1
+Mensaje normal a stdout
+Otro mensaje a stdout

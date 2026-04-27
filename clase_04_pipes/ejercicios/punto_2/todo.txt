@@ -1,0 +1,6 @@
+Y otro mas directo al fd 1
+Mensaje de error a stderr
+Otro error a stderr
+Error directo al fd 2
+Mensaje normal a stdout
+Otro mensaje a stdout

@@ -1,0 +1,3 @@
+Mensaje de error a stderr
+Otro error a stderr
+Error directo al fd 2
