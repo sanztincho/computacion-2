@@ -1,0 +1,3 @@
+* Uso de Guarda: Todo el código ejecutable de inicialización está protegido con if __name__ == "__main__":, impidiendo que los métodos como spawn rompan el flujo relanzando procesos de forma infinita.
+
+* Funciones de Nivel Superior: Tanto procesar_imagen como aplicar_filtro están declaradas a nivel de módulo (no son lambdas ni closures), permitiendo que pickle las pueda empaquetar sin errores de ámbito.
