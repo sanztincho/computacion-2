@@ -1,0 +1,15 @@
+services:
+  monitor:
+    build: .
+    image: tp1-monitor-procesos:latest
+    container_name: tp1_monitor
+    # Comparte el namespace de PIDs del host para que /proc muestre los
+    # procesos REALES de la maquina (si no, dentro del contenedor solo se
+    # verian el propio monitor y un par de procesos mas -- ver README,
+    # seccion "Limitaciones conocidas").
+    pid: host
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./dumps:/app/dumps
+    command: ["--config", "config.json", "--dump-dir", "/app/dumps"]

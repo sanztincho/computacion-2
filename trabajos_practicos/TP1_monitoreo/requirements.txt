@@ -1,0 +1,7 @@
+# Este proyecto de monitoreo no tiene dependencias externas: todo esta hecho con la
+# stdlib de Python 3.11+ (os, multiprocessing, curses, signal, json,
+# queue, pwd, fcntl, argparse). Se eligio curses en lugar de `rich` para
+# no depender de ningun paquete de terceros.
+#
+# `pip install -r requirements.txt` no va a instala nada, pero se incluye el
+# archivo debido a que la consigna lo pide como parte de la estructura del repo.

@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+dump_*.json
+dumps/*.json
+*.log
+.pytest_cache/
