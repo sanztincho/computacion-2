@@ -1,0 +1,31 @@
+services:
+  api:
+    build: .
+    container_name: tp2_api
+    ports:
+      - "8000:8000"
+    environment:
+      WORKERS: ${WORKERS:-8}
+      PROCESOS: ${PROCESOS:-}         # vacío = un proceso por core
+      MAX_COLA: ${MAX_COLA:-10000}
+      ESPERA_APAGADO: ${ESPERA_APAGADO:-10}
+      # Solo para la medición 2 (habilita hashear con ejecutor "loop"):
+      #   PERMITIR_MODO_BLOQUEANTE=1 docker compose up --build
+      PERMITIR_MODO_BLOQUEANTE: ${PERMITIR_MODO_BLOQUEANTE:-0}
+    volumes:
+      - ./volcados:/app/volcados      # los estado_<timestamp>.json quedan en el host
+    # docker stop manda SIGTERM y, si el proceso no terminó en este plazo,
+    # SIGKILL. Tiene que ser mayor que ESPERA_APAGADO + el cierre de uvicorn.
+    stop_grace_period: 30s
+    depends_on:
+      - sitios
+
+  # Sitios de prueba con latencia controlada, para mediciones reproducibles
+  # y demos de URLs caídas/lentas. Desde la API se llega como http://sitios:8001
+  sitios:
+    build: .
+    container_name: tp2_sitios
+    command: ["uvicorn", "sitios_prueba.servidor:app", "--host", "0.0.0.0",
+              "--port", "8001", "--log-level", "warning"]
+    ports:
+      - "8001:8001"

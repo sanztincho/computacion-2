@@ -1,0 +1,7 @@
+# Servidor y API (clase 19)
+fastapi==0.162.0
+uvicorn[standard]==0.54.0      # [standard] trae `websockets` para /eventos
+# Cliente HTTP asíncrono para `descargar` (clase 20; ver README, decisión 3.6)
+httpx==0.28.1
+# Solo para leer la fecha de un certificado que NO validó (chequear_ssl)
+cryptography==50.0.2
